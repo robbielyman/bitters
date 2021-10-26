@@ -1,4 +1,5 @@
 // Engine_Bitters
+// Polyphony code is from MxSynths by infinitedigits @schollz
 
 // Inherit methods from CroneEngine
 Engine_Bitters : CroneEngine {
