@@ -30,7 +30,8 @@ function notes.init()
                     return
                 end
                 if d.type == "note_on" then
-                    engine.bit_note_on(d.note, d.vel, 600)
+                    local amp = util.linexp(1, 127, 0.01, 1.0, d.vel)
+                    engine.bit_note_on(d.note, amp, 600)
                 elseif d.type == "note_off" then
                     engine.bit_note_off(d.note)
                 elseif d.cc == 64 then -- sustain pedal
@@ -46,6 +47,13 @@ function notes.init()
     end
     tab.print(mididevice_list)
 
+    params:add{
+        type    = "option",
+        id      = "pedal_mode",
+        name    = "pedal mode",
+        options = {"sustain", "sostenuto"},
+        default = 1,
+    }
     params:add{
         type    = "option",
         id      = "midi",
