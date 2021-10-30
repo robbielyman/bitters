@@ -1,6 +1,10 @@
-local parameters = {}
+local parameters = {
+    waiting_to_save = false,
+    save_on_edit = true,
+}
 
-function parameters:init()
+function parameters:init(bool)
+    self.save_on_edit = bool == nil and true or bool
     params:add_separator("b i t t e r s")
     params:add{
         type        = "control",
@@ -9,7 +13,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0.5),
         action      = function(x)
             engine.bit_set("amp", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -19,7 +24,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("degrade", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -29,7 +35,8 @@ function parameters:init()
         controlspec = controlspec.new(-1, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mix", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -39,7 +46,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mpitch", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -49,7 +57,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("lpitch", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     for i = 1,2 do
@@ -64,7 +73,8 @@ function parameters:init()
             action      = function(x)
                 local val = 12*x + params:get("coarse"..i) + 0.01*params:get("fine"..i)
                 engine.bit_set("pitch"..i, val)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -77,7 +87,8 @@ function parameters:init()
             action      = function(x)
                 local val = 12*params:get("octave"..i) + x + 0.01*params:get("fine"..i)
                 engine.bit_set("pitch"..i, val)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -88,7 +99,8 @@ function parameters:init()
             action      = function(x)
                 local val = 12*params:get("octave"..i) + params:get("coarse"..i) + 0.01*x
                 engine.bit_set("pitch"..i, val)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -100,7 +112,8 @@ function parameters:init()
             action      = function(x)
                 engine.bit_set("tri"..i, x == 1 and 1 or 0)
                 engine.bit_set("pulse"..i, x == 1 and 0 or 1)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -110,7 +123,8 @@ function parameters:init()
             controlspec = controlspec.new(0, 1, 'lin', 0.01, 0.5),
             action      = function(x)
                 engine.bit_set("width"..i, x)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -120,7 +134,8 @@ function parameters:init()
             controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
             action      = function(x)
                 engine.bit_set("mwidth"..i, x)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -130,7 +145,8 @@ function parameters:init()
             controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
             action      = function(x)
                 engine.bit_set("lwidth"..i, x)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -143,7 +159,8 @@ function parameters:init()
             action      = function(x)
                 local val = x / params:get("denominator"..i)
                 engine.bit_set("ratio"..i, val)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -156,7 +173,8 @@ function parameters:init()
             action      = function(x)
                 local val = params:get("numerator"..i) / x
                 engine.bit_set("ratio"..i, val)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -166,7 +184,8 @@ function parameters:init()
             controlspec = controlspec.new(0, 10, 'lin', 0.1, 0),
             action      = function(x)
                 engine.bit_set("index"..i, x)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -176,7 +195,8 @@ function parameters:init()
             controlspec = controlspec.new(0, 1, 'lin', 0.1, 0),
             action      = function(x)
                 engine.bit_set("mindex"..i, x)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
         params:add{
@@ -186,7 +206,8 @@ function parameters:init()
             controlspec = controlspec.new(0, 1, 'lin', 0.1, 0),
             action      = function(x)
                 engine.bit_set("lindex"..i, x)
-                -- self:save()
+                parameters:save()
+			screen_dirty = true
             end
         }
     end
@@ -197,7 +218,8 @@ function parameters:init()
         options     = {"off","on"},
         action      = function(x)
             engine.bit_set("sync", x-1)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add_group("highpass", 6)
@@ -208,7 +230,8 @@ function parameters:init()
         controlspec = controlspec.new(0.01, 20000, 'exp', 0.01, 10),
         action      = function(x)
             engine.bit_set("hipass", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -218,7 +241,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mhipass", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -228,7 +252,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("lhipass", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -238,7 +263,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("hires", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -248,7 +274,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mhires", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -258,7 +285,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("lhires", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add_group("lowpass", 6)
@@ -269,7 +297,8 @@ function parameters:init()
         controlspec = controlspec.new(0.01, 20000, 'exp', 0.01, 20000),
         action      = function(x)
             engine.bit_set("lopass", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -279,7 +308,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mlopass", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -289,7 +319,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("llopass", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -299,7 +330,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("lores", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -309,7 +341,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mlores", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -319,7 +352,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("llores", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add_group("amp env", 4)
@@ -330,7 +364,8 @@ function parameters:init()
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0.0015),
         action      = function(x)
             engine.bit_set("attack", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -340,7 +375,8 @@ function parameters:init()
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0.8),
         action      = function(x)
             engine.bit_set("decay", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -350,7 +386,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 1),
         action      = function(x)
             engine.bit_set("sustain", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -360,7 +397,8 @@ function parameters:init()
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, .131),
         action      = function(x)
             engine.bit_set("release", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add_group("mod env", 4)
@@ -371,7 +409,8 @@ function parameters:init()
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0.0015),
         action      = function(x)
             engine.bit_set("mattack", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -381,7 +420,8 @@ function parameters:init()
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0.8),
         action      = function(x)
             engine.bit_set("mdecay", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -391,7 +431,8 @@ function parameters:init()
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 1),
         action      = function(x)
             engine.bit_set("msustain", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -401,7 +442,8 @@ function parameters:init()
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, .131),
         action      = function(x)
             engine.bit_set("mrelease", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -411,7 +453,8 @@ function parameters:init()
         controlspec = controlspec.new(0.001, 10, 'exp', 0.01, 4, "hz"),
         action      = function(x)
             engine.bit_set("lfreq", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
     params:add{
@@ -421,7 +464,8 @@ function parameters:init()
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0),
         action      = function(x)
             engine.bit_set("lfade", x)
-            -- self:save()
+            parameters:save()
+			screen_dirty = true
         end
     }
 
@@ -433,13 +477,24 @@ function parameters:init()
         controlspec = controlspec.new(0, 100, 'lin', 1, 20, 'notes', 1/100),
         action      = function(x)
             engine.bit_set_polyphony(math.floor(x))
-            -- self:save()
+            parameters:save()
         end
     }
-
 end
 
 function parameters:save()
+    if not self.save_on_edit then
+        return
+    end
+    local temp = clock.run(function()
+        if self.waiting_to_save then
+            clock.cancel(self.waiting_to_save)
+            self.waiting_to_save = nil
+        end
+        clock.sleep(1)
+        params:write(_path.data .. "bitters/default.pset")
+    end)
+    self.waiting_to_save = temp
 end
 
 return parameters
