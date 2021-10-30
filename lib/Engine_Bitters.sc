@@ -126,6 +126,8 @@ Engine_Bitters : CroneEngine {
           \pulse2, bitParameters.at("pulse2"),
           \pitch1, bitParameters.at("pitch1"),
           \pitch2, bitParameters.at("pitch2"),
+          \mpitch, bitParameters.at("mpitch"),
+          \lpitch, bitParameters.at("lpitch"),
           \ratio1, bitParameters.at("ratio1"),
           \ratio2, bitParameters.at("ratio2"),
           \index1, bitParameters.at("index1"),
