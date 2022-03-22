@@ -3,8 +3,8 @@ local parameters = {
     save_on_edit = true,
 }
 
-function parameters:init(bool)
-    self.save_on_edit = bool == nil and true or bool
+function parameters.init(bool)
+    parameters.save_on_edit = bool == nil and true or bool
     params:add_separator("b i t t e r s")
     params:add{
         type        = "control",

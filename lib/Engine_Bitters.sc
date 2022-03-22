@@ -78,7 +78,7 @@ Engine_Bitters : CroneEngine {
       var snd = LinXFade2.ar(osc1[0], osc2[0], mix);
       var lofreq = lopass * (2.pow((5*mlopass*mod_env) + (2.5*llopass*lfo)));
       var hifreq = hipass * (2.pow((5*mhipass*mod_env) + (2.5*lhipass*lfo)));
-      snd = Decimator.ar(snd, (44100.0 / (1 + (15*degrade))), (16-(12*degrade)));
+      snd = Decimator.ar(snd, (48000.0 / (1 + (15*degrade))), (16-(12*degrade)));
       snd = SVF.ar(snd, hifreq, (hires + (mhires*mod_env) + (lhires*lfo)), lowpass:0, highpass:1);
       snd = SVF.ar(snd, lofreq, (lores + (mlores*mod_env) + (llores*lfo)));
       Out.ar(out, (snd*amp_env).dup);

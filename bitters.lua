@@ -27,21 +27,29 @@ function init()
     parameters.init()
     notes = include("lib/notes")
     notes.init()
+    graphics = include("lib/graphics")
+    graphics.init()
     page = include("lib/page")
     page:init(needs_restart)
     half_second = include("lib/halfsecond")
     half_second.init()
-    screen_dirty = true
     params:bang()
+    redraw_clock = clock.run(function()
+        while true do
+            redraw()
+            clock.sleep(1/15)
+        end
+    end)
 end
 
 function key(n,z)
-    if n == 2 then
-        page:left()
-    elseif n == 3 then
-        page:right()
+    if z == 1 then
+        if n == 2 then
+            page:left()
+        elseif n == 3 then
+            page:right()
+        end
     end
-    screen_dirty = true
 end
 
 function enc(n,d)
@@ -56,10 +64,16 @@ function enc(n,d)
     elseif n == 3 then
         page:delta(d)
     end
-    screen_dirty = true
 end
 
 function r()
   norns.script.load(norns.state.script)
 end
 
+function redraw()
+    page:render()
+end
+
+function cleanup()
+    clock.cancel(redraw_clock)
+end
