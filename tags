@@ -1,0 +1,45 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/02cf1a6/
+action	lib/halfsecond.lua	/^    action=function(x) softcut.level(1,x) end}$/;"	f
+action	lib/halfsecond.lua	/^    action=function(x) softcut.pan(1,x) end}$/;"	f
+action	lib/halfsecond.lua	/^    action=function(x) softcut.pre_level(1,x) end}$/;"	f
+action	lib/halfsecond.lua	/^    action=function(x) softcut.rate(1,x) end}$/;"	f
+action	lib/parameters.lua	/^            action      = function(x)$/;"	f
+action	lib/parameters.lua	/^        action      = function(x)$/;"	f
+cleanup	bitters.lua	/^function cleanup()$/;"	f
+enc	bitters.lua	/^function enc(n,d)$/;"	f
+graphics.init	lib/graphics.lua	/^function graphics.init()$/;"	f
+graphics:circle	lib/graphics.lua	/^function graphics:circle(x, y, r, l)$/;"	f
+graphics:mlrs	lib/graphics.lua	/^function graphics:mlrs(x1, y1, x2, y2, l)$/;"	f
+graphics:mls	lib/graphics.lua	/^function graphics:mls(x1, y1, x2, y2, l)$/;"	f
+graphics:rect	lib/graphics.lua	/^function graphics:rect(x, y, w, h, l)$/;"	f
+graphics:setup	lib/graphics.lua	/^function graphics:setup()$/;"	f
+graphics:teardown	lib/graphics.lua	/^function graphics:teardown()$/;"	f
+graphics:text	lib/graphics.lua	/^function graphics:text(x, y, s, l)$/;"	f
+graphics:text_center	lib/graphics.lua	/^function graphics:text_center(x, y, s, l)$/;"	f
+graphics:text_right	lib/graphics.lua	/^function graphics:text_right(x, y, s, l)$/;"	f
+init	bitters.lua	/^function init()$/;"	f
+key	bitters.lua	/^function key(n,z)$/;"	f
+mididevice[name].midi.event	lib/notes.lua	/^            mididevice[name].midi.event = function(data)$/;"	f
+notes.init	lib/notes.lua	/^function notes.init()$/;"	f
+page:delta	lib/page.lua	/^function page:delta(d)$/;"	f
+page:init	lib/page.lua	/^function page:init(bool)$/;"	f
+page:left	lib/page.lua	/^function page:left()$/;"	f
+page:render	lib/page.lua	/^function page:render()$/;"	f
+page:right	lib/page.lua	/^function page:right()$/;"	f
+page:scroll	lib/page.lua	/^function page:scroll(delta)$/;"	f
+parameters.init	lib/parameters.lua	/^function parameters.init(bool)$/;"	f
+parameters:save	lib/parameters.lua	/^function parameters:save()$/;"	f
+r	bitters.lua	/^function r()$/;"	f
+redraw	bitters.lua	/^function redraw()$/;"	f
+redraw_clock	bitters.lua	/^    redraw_clock = clock.run(function()$/;"	f
+render	lib/page.lua	/^            render = function()$/;"	f
+sc.init	lib/halfsecond.lua	/^function sc.init()$/;"	f
+temp	lib/parameters.lua	/^    local temp = clock.run(function()$/;"	f
