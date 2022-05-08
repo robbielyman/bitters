@@ -3,9 +3,40 @@ local parameters = {
     save_on_edit = true,
 }
 
+local paramslist = {
+    "degrade", "mix", "width1", "width2", "mdwith1", "mwidth2", "lwidth1", "lwidth2"
+}
+
 function parameters.init(bool)
     parameters.save_on_edit = bool == nil and true or bool
     params:add_separator("b i t t e r s")
+    params:add{
+        type        = "trigger",
+        id          = "randomize",
+        name        = "randomize",
+        action      = function()
+            for _,p in pairs({
+                "degrade", "mix", "width1", "width2", "mwidth1", "mwidth2", "lwidth1", "lwidth2",
+                -- "index1", "index2", "mindex1", "mindex2", "lindex1", "lindex2",
+                -- "hipass", "mhipass", "lhipass", "hires", "mhires", "lhires",
+                -- "lopass", "mlopass", "llopass", "lores", "mlores", "llores",
+                "attack", "decay", "sustain", "release",
+                "mattack", "mdecay", "msustain", "mrelease",
+                "lfreq", "lfade"
+            }) do
+                params:set_raw(p, math.random())
+            end
+            for _,p in pairs({"octave1", "octave2"}) do
+                params:set(p, math.random(-2,1))
+            end
+            for _,p in pairs({"wave1", "wave2"}) do
+                params:set(p, math.random(1,2))
+            end
+            -- for _,p in pairs({"numerator1", "numerator2", "denominator1", "denominator2"}) do
+            --    params:set(p, math.random(1,30))
+            -- end
+        end
+    }
     params:add{
         type        = "control",
         id          = "amp",
