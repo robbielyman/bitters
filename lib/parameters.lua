@@ -1,6 +1,6 @@
 local parameters = {
     waiting_to_save = false,
-    save_on_edit = true,
+    save_on_edit = false,
 }
 
 local paramslist = {
