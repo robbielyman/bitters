@@ -505,7 +505,7 @@ function parameters.init(bool)
         type        = "control",
         id          = "max_polyphony",
         name        = "max polyphony",
-        controlspec = controlspec.new(0, 100, 'lin', 1, 20, 'notes', 1/100),
+        controlspec = controlspec.new(0, 100, 'lin', 1, 10, 'notes', 1/100),
         action      = function(x)
             engine.bit_set_polyphony(math.floor(x))
             parameters:save()
