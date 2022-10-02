@@ -13,7 +13,8 @@ function Bitters.param_changed_callback()
 end
 
 -- adds a list of params
-function Bitters.init()
+-- @bool midicontrol If false, don't build and set-up midi params
+function Bitters.init(midicontrol)
     params:add_separator("bitters", "b i t t e r s")
     params:add{
         type        = "trigger",
@@ -464,7 +465,9 @@ function Bitters.init()
             Bitters.param_changed_callback()
         end
     }
-
+    if not midicontrol then
+        return
+    end
     params:add_separator("midi")
     params:add{
         type        = "control",
@@ -552,6 +555,21 @@ function Bitters.init()
     if #mididevice_list>1 then
         params:set("midi",2)
     end
+end
+
+-- Note on function
+-- @int note Midi note number
+-- @number vel Velocity (0.0-1.0)
+-- @number time Gate time (optional)
+function Bitters.note_on(note, vel, time)
+    if not time then time = 600 end
+    engine.bit_note_on(note, vel, time)
+end
+
+-- Note off function
+-- @int note Midi note number
+function Bitters.note_off(note)
+    engine.bit_note_off(note)
 end
 
 return Bitters
