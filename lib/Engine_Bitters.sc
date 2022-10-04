@@ -161,7 +161,7 @@ Engine_Bitters : CroneEngine {
           \sustain, bitParameters.at("sustain"),
           \release, bitParameters.at("release"),
           \mattack, bitParameters.at("mattack"),
-          \mdecay, bitParameters.at("mdecay "),
+          \mdecay, bitParameters.at("mdecay"),
           \msustain, bitParameters.at("msustain"),
           \mrelease, bitParameters.at("mrelease"),
           \lfreq, bitParameters.at("lfreq"),
