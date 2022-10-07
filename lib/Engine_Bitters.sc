@@ -44,21 +44,21 @@ Engine_Bitters : CroneEngine {
     SynthDef("BittersSynth", {
       arg out, note=69, amp=0.5, gate=0,
       tri1=1, pulse1=0, tri2=0, pulse2=1, 
-      pitch1=0, pitch2=0,
-      ratio1=1, ratio2=1, index1=0, index2=0,
-      mindex1=0, mindex2=0,
-      lindex1=0, lindex2=0,
+      pitch1=0.0, pitch2=0.0,
+      ratio1=1, ratio2=1, index1=0.0, index2=0.0,
+      mindex1=0.0, mindex2=0.0,
+      lindex1=0.0, lindex2=0.0,
       width1=0.5, width2=0.5,
-      mwidth1=0, mwidth2=0, lwidth1=0, lwidth2=0,
-      sync=0, mix=0, degrade=0,
-      mpitch=0, lpitch=0,
-      lopass=22000, lores=0,
-      mlopass=1, mlores=0, llopass=0, llores=0,
-      hipass=10, hires=0,
-      mhipass=0, mhires=0, lhipass=0, lhires=0,
-      attack=0.0015, decay=0.8, sustain=1, release=0.131,
-      mattack=0.0015, mdecay=0.8, msustain=1, mrelease=0.131,
-      lfreq=4, lfade=0;
+      mwidth1=0.0, mwidth2=0.0, lwidth1=0.0, lwidth2=0.0,
+      sync=0.0, mix=0.0, degrade=0.0,
+      mpitch=0.0, lpitch=0.0,
+      lopass=22000, lores=0.0,
+      mlopass=1.0, mlores=0.0, llopass=0.0, llores=0.0,
+      hipass=10.0, hires=0.0,
+      mhipass=0.0, mhires=0.0, lhipass=0.0, lhires=0.0,
+      attack=0.0015, decay=0.8, sustain=1.0, release=0.131,
+      mattack=0.0015, mdecay=0.8, msustain=1.0, mrelease=0.131,
+      lfreq=4.0, lfade=0.0;
 
       var amp_env = Env.adsr(attack, decay, sustain, release, amp).kr(2,gate);
       var mod_env = Env.adsr(mattack, mdecay, msustain, mrelease).kr(0,gate);
@@ -66,9 +66,9 @@ Engine_Bitters : CroneEngine {
       var freq1 = (note + pitch1 + (1.2*mpitch*mod_env) + (1.2*lpitch*lfo)).midicps;
       var freq2 = (note + pitch2 + (1.2*mpitch*mod_env) + (1.2*lpitch*lfo)).midicps;
       var fm1 = SinOsc.ar(freq:(ratio1*freq1), 
-        mul:(index1 + (10*mindex1*mod_env) + (10*lindex1*lfo)));
+        mul:(index1 + (10.0*mindex1*mod_env) + (10.0*lindex1*lfo)));
       var fm2 = SinOsc.ar(freq:(ratio2*freq2),
-        mul:(index2 + (10*mindex2*mod_env) + (10*lindex2*lfo)));
+        mul:(index2 + (10.0*mindex2*mod_env) + (10.0*lindex2*lfo)));
       var pw1 = width1 + (0.5*mwidth1*mod_env) + (0.5*lwidth1*lfo);
       var pw2 = width2 + (0.5*mwidth2*mod_env) + (0.5*lwidth2*lfo);
       var osc1 = tri1*TrianglePTR.ar(freq:freq1, phase:fm1, width:pw1)
@@ -76,9 +76,9 @@ Engine_Bitters : CroneEngine {
       var osc2 = tri2*TrianglePTR.ar(freq:freq2, phase:fm2, sync:(sync*osc1[1]), width:pw2)
         + pulse2*PulsePTR.ar(freq:freq2, phase:fm2, sync:(sync*osc1[1]), width:pw2);
       var snd = LinXFade2.ar(osc1[0], osc2[0], mix);
-      var lofreq = lopass * (2.pow((5*mlopass*mod_env) + (2.5*llopass*lfo)));
-      var hifreq = hipass * (2.pow((5*mhipass*mod_env) + (2.5*lhipass*lfo)));
-      snd = Decimator.ar(snd, (48000.0 / (1 + (15*degrade))), (16-(12*degrade)));
+      var lofreq = lopass * (2.0.pow((5.0*mlopass*mod_env) + (2.5*llopass*lfo)));
+      var hifreq = hipass * (2.0.pow((5.0*mhipass*mod_env) + (2.5*lhipass*lfo)));
+      snd = Decimator.ar(snd, (48000.0 / (1.0 + (15.0*degrade))), (16.0-(12.0*degrade)));
       snd = SVF.ar(snd, hifreq, (hires + (mhires*mod_env) + (lhires*lfo)), lowpass:0, highpass:1);
       snd = SVF.ar(snd, lofreq, (lores + (mlores*mod_env) + (llores*lfo)));
       Out.ar(out, (snd*amp_env).dup);
