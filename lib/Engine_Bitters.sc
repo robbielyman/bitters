@@ -66,9 +66,9 @@ Engine_Bitters : CroneEngine {
       var freq1 = (note + pitch1 + (1.2*mpitch*mod_env) + (1.2*lpitch*lfo)).midicps;
       var freq2 = (note + pitch2 + (1.2*mpitch*mod_env) + (1.2*lpitch*lfo)).midicps;
       var fm1 = SinOsc.ar(freq:(ratio1*freq1), 
-        mul:(index1 + (10.0*mindex1*mod_env) + (10.0*lindex1*lfo)));
+        mul:(index1 + (2.0*mindex1*mod_env) + (2.0*lindex1*lfo)));
       var fm2 = SinOsc.ar(freq:(ratio2*freq2),
-        mul:(index2 + (10.0*mindex2*mod_env) + (10.0*lindex2*lfo)));
+        mul:(index2 + (2.0*mindex2*mod_env) + (2.0*lindex2*lfo)));
       var pw1 = width1 + (0.5*mwidth1*mod_env) + (0.5*lwidth1*lfo);
       var pw2 = width2 + (0.5*mwidth2*mod_env) + (0.5*lwidth2*lfo);
       var osc1 = tri1*TrianglePTR.ar(freq:freq1, phase:fm1, width:pw1)

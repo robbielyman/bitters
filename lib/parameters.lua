@@ -212,7 +212,7 @@ function parameters.init(bool)
             type        = "control",
             id          = "index"..i,
             name        = "fm index",
-            controlspec = controlspec.new(0, 10, 'lin', 0.1, 0),
+            controlspec = controlspec.new(0, 5, 'lin', 0.01, 0),
             action      = function(x)
                 engine.bit_set("index"..i, x)
                 parameters:save()
@@ -223,7 +223,7 @@ function parameters.init(bool)
             type        = "control",
             id          = "mindex"..i,
             name        = "env > index",
-            controlspec = controlspec.new(0, 1, 'lin', 0.1, 0),
+            controlspec = controlspec.UNIPOLAR,
             action      = function(x)
                 engine.bit_set("mindex"..i, x)
                 parameters:save()
@@ -234,7 +234,7 @@ function parameters.init(bool)
             type        = "control",
             id          = "lindex"..i,
             name        = "lfo > index",
-            controlspec = controlspec.new(0, 1, 'lin', 0.1, 0),
+            controlspec = controlspec.UNIPOLAR,
             action      = function(x)
                 engine.bit_set("lindex"..i, x)
                 parameters:save()
