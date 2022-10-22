@@ -274,9 +274,10 @@ function init()
         function(self)
             self.lists[1].index = self.index
             self.lists[2].index = self.index
-            for i = 1, 4 do
+            for i = 1, 3 do
                 self.lists[2].entries[i] = params:get(self.params[i])
             end
+            self.lists[2].entries[4] = params:get(self.params[4]) == 1 and "off" or "on"
             self.lists[2].text_align = "right"
         end,
         function(self, n, d)
@@ -311,18 +312,21 @@ function init()
             local row = (self.index - 1) // 2 + 1
             self.lists[1].index = row
             self.lists[1].active = false
+            self.lists[1].num_above_selected = 0
             self.lists[2].index = row
             for i = 1, 9 do
                 self.lists[2].entries[i] = params:get(self.params[2 * (i - 1) + 1])
             end
             self.lists[2].active = self.index % 2 == 1
             self.lists[2].text_align = "center"
+            self.lists[2].num_above_selected = 0
             self.lists[3].index = row
             for i = 1, 9 do
                 self.lists[3].entries[i] = params:get(self.params[2 * i])
             end
             self.lists[3].active = self.index % 2 == 0
             self.lists[3].text_align = "center"
+            self.lists[3].num_above_selected = 0
         end,
         function(self, n, d)
             if n == 2 then
@@ -428,7 +432,7 @@ end
 
 function Tab:redraw()
     self:hook()
-    for _, list in self.lists do
+    for _, list in pairs(self.lists) do
         list:redraw()
     end
 end
