@@ -16,17 +16,24 @@ engine.name = "Bitters"
 
 function init()
     Needs_Restart = false
-    if not util.file_exists("/home/we/.local/share/SuperCollider/Extensions/TrianglePTR/TrianglePTR_scsynth.so") then
-        util.os_capture("mkdir /home/we/.local/share/SuperCollider/Extensions/TrianglePTR")
-        util.os_capture("cp /home/we/dust/code/bitters/bin/TrianglePTR/TrianglePTR_scsynth.so /home/we/.local/share/SuperCollider/Extensions/TrianglePTR/TrianglePTR_scsynth.so")
-        print("installed TrianglePTR, please restart norns")
-        Needs_Restart = true
+    local extensions = "/home/we/.local/share/SuperCollider/Extensions"
+    local triangle_ptr_files = {"TrianglePTR.sc", "TrianglePTR_scsynth.so"}
+    local pulse_ptr_files = {"PulsePTR.sc", "PulsePTR_scsynth.so"}
+    for _,file in pairs(triangle_ptr_files) do
+        if not util.file_exists(extensions .. "/TrianglePTR/" .. file) then
+            util.os_capture("mkdir " .. extensions .. "/TrianglePTR")
+            util.os_capture("cp " .. norns.state.path .. "/ignore/" .. file .. " " .. extensions .. "/TrianglePTR/" .. file)
+            print("installed " .. file)
+            Needs_Restart = true
+        end
     end
-    if not util.file_exists("/home/we/.local/share/SuperCollider/Extensions/PulsePTR/PulsePTR_scsynth.so") then
-        util.os_capture("mkdir /home/we/.local/share/SuperCollider/Extensions/PulsePTR")
-        util.os_capture("cp /home/we/dust/code/bitters/bin/PulsePTR/PulsePTR_scsynth.so /home/we/.local/share/SuperCollider/Extensions/PulsePTR/PulsePTR_scsynth.so")
-        print("installed PulsePTR, please restart norns")
-        Needs_Restart = true
+    for _,file in (pulse_ptr_files) do
+        if not util.file_exists(extensions .. "/PulsePTR/" .. file) then
+            util.os_capture("mkdir " .. extensions .. "/PulsePTR")
+            util.os_capture("cp " .. norns.state.path .. "/ignore/" .. file .. " " .. extensions .. "/PulsePTR/" .. file)
+            print("installed " .. file)
+            Needs_Restart = true
+        end
     end
     Restart_Message = UI.Message.new{"please restart norns"}
     Bitters.init(true)
