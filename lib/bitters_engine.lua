@@ -50,7 +50,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0.5),
         action      = function(x)
             engine.bit_set("amp", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("amp")
         end
     }
     params:add{
@@ -60,7 +60,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("degrade", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("degrade")
         end
     }
     params:add{
@@ -70,7 +70,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(-1, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mix", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("mix")
         end
     }
     params:add{
@@ -80,7 +80,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mpitch", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("mpitch")
         end
     }
     params:add{
@@ -90,7 +90,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("lpitch", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("lpitch")
         end
     }
     for i = 1,2 do
@@ -105,7 +105,7 @@ function Bitters.init(midicontrol)
             action      = function(x)
                 local val = 12*x + params:get("coarse"..i) + 0.01*params:get("fine"..i)
                 engine.bit_set("pitch"..i, val)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("octave" .. i)
             end
         }
         params:add{
@@ -118,7 +118,7 @@ function Bitters.init(midicontrol)
             action      = function(x)
                 local val = 12*params:get("octave"..i) + x + 0.01*params:get("fine"..i)
                 engine.bit_set("pitch"..i, val)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("coarse" .. i)
             end
         }
         params:add{
@@ -129,7 +129,7 @@ function Bitters.init(midicontrol)
             action      = function(x)
                 local val = 12*params:get("octave"..i) + params:get("coarse"..i) + 0.01*x
                 engine.bit_set("pitch"..i, val)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("fine" .. i)
             end
         }
         params:add{
@@ -141,7 +141,7 @@ function Bitters.init(midicontrol)
             action      = function(x)
                 engine.bit_set("tri"..i, x == 1 and 1 or 0)
                 engine.bit_set("pulse"..i, x == 1 and 0 or 1)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("wave" .. i)
             end
         }
         params:add{
@@ -151,7 +151,7 @@ function Bitters.init(midicontrol)
             controlspec = controlspec.new(0, 1, 'lin', 0.01, 0.5),
             action      = function(x)
                 engine.bit_set("width"..i, x)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("width" .. i)
             end
         }
         params:add{
@@ -161,7 +161,7 @@ function Bitters.init(midicontrol)
             controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
             action      = function(x)
                 engine.bit_set("mwidth"..i, x)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("mwidth" .. i)
             end
         }
         params:add{
@@ -171,7 +171,7 @@ function Bitters.init(midicontrol)
             controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
             action      = function(x)
                 engine.bit_set("lwidth"..i, x)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("lwidth" .. i)
             end
         }
         params:add{
@@ -184,7 +184,7 @@ function Bitters.init(midicontrol)
             action      = function(x)
                 local val = x / params:get("denominator"..i)
                 engine.bit_set("ratio"..i, val)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("numerator" .. i)
             end
         }
         params:add{
@@ -197,7 +197,7 @@ function Bitters.init(midicontrol)
             action      = function(x)
                 local val = params:get("numerator"..i) / x
                 engine.bit_set("ratio"..i, val)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("denominator" .. i)
             end
         }
         params:add{
@@ -207,7 +207,7 @@ function Bitters.init(midicontrol)
             controlspec = controlspec.new(0, 5, 'lin', 0.01, 0),
             action      = function(x)
                 engine.bit_set("index"..i, x)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("index" .. i)
             end
         }
         params:add{
@@ -217,7 +217,7 @@ function Bitters.init(midicontrol)
             controlspec = controlspec.UNIPOLAR,
             action      = function(x)
                 engine.bit_set("mindex"..i, x)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("mindex" .. i)
             end
         }
         params:add{
@@ -227,7 +227,7 @@ function Bitters.init(midicontrol)
             controlspec = controlspec.UNIPOLAR,
             action      = function(x)
                 engine.bit_set("lindex"..i, x)
-                Bitters.param_changed_callback()
+                Bitters.param_changed_callback("lindex" .. i)
             end
         }
     end
@@ -238,7 +238,7 @@ function Bitters.init(midicontrol)
         options     = {"off","on"},
         action      = function(x)
             engine.bit_set("sync", x-1)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("sync")
         end
     }
     params:add_group("highpass", 6)
@@ -249,7 +249,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.01, 20000, 'exp', 0.01, 10),
         action      = function(x)
             engine.bit_set("hipass", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("hipass")
         end
     }
     params:add{
@@ -259,7 +259,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mhipass", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("mhipass")
         end
     }
     params:add{
@@ -269,7 +269,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("lhipass", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("lhipass")
         end
     }
     params:add{
@@ -279,7 +279,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("hires", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("hires")
         end
     }
     params:add{
@@ -289,7 +289,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mhires", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("mhires")
         end
     }
     params:add{
@@ -299,7 +299,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("lhires", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("lhires")
         end
     }
     params:add_group("lowpass", 6)
@@ -310,7 +310,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.01, 20000, 'exp', 0.01, 20000),
         action      = function(x)
             engine.bit_set("lopass", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("lopass")
         end
     }
     params:add{
@@ -320,7 +320,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mlopass", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("mlopass")
         end
     }
     params:add{
@@ -330,7 +330,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("llopass", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("llopass")
         end
     }
     params:add{
@@ -340,7 +340,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("lores", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("lores")
         end
     }
     params:add{
@@ -350,7 +350,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("mlores", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("mlores")
         end
     }
     params:add{
@@ -360,7 +360,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 0),
         action      = function(x)
             engine.bit_set("llores", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("llores")
         end
     }
     params:add_group("amp env", 4)
@@ -371,7 +371,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0.0015),
         action      = function(x)
             engine.bit_set("attack", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("attack")
         end
     }
     params:add{
@@ -381,7 +381,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0.8),
         action      = function(x)
             engine.bit_set("decay", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("decay")
         end
     }
     params:add{
@@ -391,7 +391,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 1),
         action      = function(x)
             engine.bit_set("sustain", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("sustain")
         end
     }
     params:add{
@@ -401,7 +401,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, .131),
         action      = function(x)
             engine.bit_set("release", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("release")
         end
     }
     params:add_group("mod env", 4)
@@ -412,7 +412,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0.0015),
         action      = function(x)
             engine.bit_set("mattack", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("mattack")
         end
     }
     params:add{
@@ -422,7 +422,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0.8),
         action      = function(x)
             engine.bit_set("mdecay", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("mdecay")
         end
     }
     params:add{
@@ -432,7 +432,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 1, 'lin', 0.01, 1),
         action      = function(x)
             engine.bit_set("msustain", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("msustain")
         end
     }
     params:add{
@@ -442,7 +442,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, .131),
         action      = function(x)
             engine.bit_set("mrelease", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("mrelease")
         end
     }
     params:add{
@@ -452,7 +452,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.001, 10, 'exp', 0.01, 4, "hz"),
         action      = function(x)
             engine.bit_set("lfreq", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("lfreq")
         end
     }
     params:add{
@@ -462,7 +462,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0.01, 10, 'exp', 0.01, 0),
         action      = function(x)
             engine.bit_set("lfade", x)
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("lfade")
         end
     }
     if not midicontrol then
@@ -476,7 +476,7 @@ function Bitters.init(midicontrol)
         controlspec = controlspec.new(0, 100, 'lin', 1, 10, 'notes', 1/100),
         action      = function(x)
             engine.bit_set_polyphony(math.floor(x))
-            Bitters.param_changed_callback()
+            Bitters.param_changed_callback("max_polyphony")
         end
     }
     local mididevice = {}
