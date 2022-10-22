@@ -468,7 +468,7 @@ function Bitters.init(midicontrol)
     if not midicontrol then
         return
     end
-    params:add_separator("midi")
+    params:add_separator("midi_sep", "midi")
     params:add{
         type        = "control",
         id          = "max_polyphony",

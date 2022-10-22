@@ -38,25 +38,28 @@ function init()
         "numerator1", "denominator1", "index1"},
         {
             UI.List.new(0, 24, 1, {"wave", "octave", "coarse", "fine"}),
-            UI.List.new(30, 24),
+            UI.List.new(45, 24),
             UI.List.new(50, 24, 1, {"width", "numerator", "denominator", "index"}),
-            UI.List.new(80, 24)
+            UI.List.new(115, 24)
         },
         function(self)
             self.lists[1].active = self.index <= 4
             self.lists[1].index = util.clamp(self.index, 1, 4)
             self.lists[2].active = self.index <= 4
             self.lists[2].index = util.clamp(self.index, 1, 4)
-            for i = 1, 4 do
+            self.lists[2].entries[1] = params:get(self.params[1]) == 1 and "pls" or "tri"
+            for i = 2, 4 do
                 self.lists[2].entries[i] = params:get(self.params[i])
             end
+            self.lists[2].text_align = "right"
             self.lists[3].active = self.index > 4
             self.lists[3].index = util.clamp(self.index, 5, 8) - 4
             self.lists[4].active = self.index > 4
             self.lists[4].index = util.clamp(self.index, 5, 8) - 4
             for i = 5, 8 do
-                self.lists[2].entries[i - 4] = params:get(self.params[i])
+                self.lists[4].entries[i - 4] = params:get(self.params[i])
             end
+            self.lists[4].text_align = "right"
         end,
         function(self, n, d)
             if n == 2 then
@@ -71,16 +74,17 @@ function init()
         "numerator2", "denominator2", "index2"},
         {
             UI.List.new(0, 24, 1, {"wave", "octave", "coarse", "fine"}),
-            UI.List.new(30, 24),
+            UI.List.new(45, 24),
             UI.List.new(50, 24, 1, {"width", "numerator", "denominator", "index"}),
-            UI.List.new(80, 24)
+            UI.List.new(115, 24)
         },
         function(self)
             self.lists[1].active = self.index <= 4
             self.lists[1].index = util.clamp(self.index, 1, 4)
             self.lists[2].active = self.index <= 4
             self.lists[2].index = util.clamp(self.index, 1, 4)
-            for i = 1, 4 do
+            self.lists[2].entries[1] = params:get(self.params[1]) == 1 and "pls" or "tri"
+            for i = 2, 4 do
                 self.lists[2].entries[i] = params:get(self.params[i])
             end
             self.lists[2].text_align = "right"
@@ -89,9 +93,9 @@ function init()
             self.lists[4].active = self.index > 4
             self.lists[4].index = util.clamp(self.index, 5, 8) - 4
             for i = 5, 8 do
-                self.lists[2].entries[i - 4] = params:get(self.params[i])
+                self.lists[4].entries[i - 4] = params:get(self.params[i])
             end
-            self.lists[4].text_align = 4
+            self.lists[4].text_align = "right"
         end,
         function(self, n, d)
             if n == 2 then
@@ -108,8 +112,8 @@ function init()
         Tab.new(
         {"hipass", "hires"},
         {
-            UI.List.new(50, 34, 1, {"frequency", "resonance"}),
-            UI.List.new(80, 34)
+            UI.List.new(70, 34, 1, {"freq", "res"}),
+            UI.List.new(123, 34)
         },
         function(self)
             self.lists[1].index = self.index
@@ -132,8 +136,8 @@ function init()
         Tab.new(
         {"lopass", "lores"},
         {
-            UI.List.new(50, 34, 1, {"frequency", "resonance"}),
-            UI.List.new(80, 34)
+            UI.List.new(70, 34, 1, {"freq", "res"}),
+            UI.List.new(123, 34)
         },
         function(self)
             self.lists[1].index = self.index
@@ -168,8 +172,8 @@ function init()
         Tab.new(
         {"attack", "decay", "sustain", "release"},
         {
-            UI.List.new(50, 24, 1, {"attack", "decay", "sustain", "release"}),
-            UI.List.new(80, 34)
+            UI.List.new(70, 24, 1, {"attack", "decay", "sustain", "release"}),
+            UI.List.new(120, 24)
         },
         function(self)
             self.lists[1].index = self.index
@@ -193,8 +197,8 @@ function init()
         Tab.new(
         {"mattack", "mdecay", "msustain", "mrelease"},
         {
-            UI.List.new(50, 24, 1, {"attack", "decay", "sustain", "release"}),
-            UI.List.new(80, 34)
+            UI.List.new(70, 24, 1, {"attack", "decay", "sustain", "release"}),
+            UI.List.new(120, 24)
         },
         function(self)
             self.lists[1].index = self.index
@@ -218,8 +222,8 @@ function init()
         Tab.new(
         {"lfreq", "lfade"},
         {
-            UI.List.new(50, 34, 1, {"frequency", "fade time"}),
-            UI.List.new(80, 34)
+            UI.List.new(70, 34, 1, {"freq", "fade"}),
+            UI.List.new(115, 34)
         },
         function(self)
             self.lists[1].index = self.index
@@ -227,6 +231,7 @@ function init()
             for i = 1,2 do
                 self.lists[2].entries[i] = params:get(self.params[i])
             end
+            self.lists[2].text_align = "right"
             self.lfo_graph:update_functions()
             self.lfo_graph:redraw()
         end,
@@ -242,13 +247,13 @@ function init()
     EnvPage.tabs[1].env_graph = Envgraph.new_adsr(0, 20, nil, nil,
     params:get("attack"), params:get("decay"), params:get("sustain"), params:get("release"),
     1, -4)
-    EnvPage.tabs[1].env_graph:set_position_and_size(57, 34, 60, 25)
+    EnvPage.tabs[1].env_graph:set_position_and_size(4, 22, 56, 38)
     EnvPage.tabs[2].env_graph = Envgraph.new_adsr(0, 20, nil, nil,
     params:get("mattack"), params:get("mdecay"), params:get("msustain"), params:get("mrelease"),
     1, -4)
-    EnvPage.tabs[2].env_graph:set_position_and_size(57, 34, 60, 25)
+    EnvPage.tabs[2].env_graph:set_position_and_size(4, 22, 56, 38)
     EnvPage.tabs[3].lfo_graph = Graph.new(0, 1, "lin", -1, 1, "lin", nil, true, false)
-    EnvPage.tabs[3].lfo_graph:set_position_and_size(4, 21, 56, 34)
+    EnvPage.tabs[3].lfo_graph:set_position_and_size(4, 22, 56, 38)
     EnvPage.tabs[3].lfo_graph:add_function( function(x)
         local freq = params:get("lfreq")
         local fade = params:get("lfade")
@@ -337,8 +342,6 @@ function init()
             redraw()
         end)
     })
-    Notes = include("lib/notes")
-    Notes.init()
     Graphics = include("lib/graphics")
     Graphics.init()
     Pages = UI.Pages.new(1, 4)
