@@ -12,11 +12,11 @@ Filtergraph = require("filtergraph")
 Envgraph = require("envgraph")
 Graph = require("graph")
 
-engine.name = "Bitters"
+local extensions = "/home/we/.local/share/SuperCollider/Extensions"
+engine.name = util.file_exists(extensions .. "/PulsePTR/PulsePTR.sc") and util.file_exists(extensions .. "/TrianglePTR/TrianglePTR.sc") and "Bitters" or nil
 
 function init()
     Needs_Restart = false
-    local extensions = "/home/we/.local/share/SuperCollider/Extensions"
     local triangle_ptr_files = {"TrianglePTR.sc", "TrianglePTR_scsynth.so"}
     local pulse_ptr_files = {"PulsePTR.sc", "PulsePTR_scsynth.so"}
     for _,file in pairs(triangle_ptr_files) do
@@ -354,7 +354,9 @@ function init()
     Pages = UI.Pages.new(1, 4)
     Half_Second = include("lib/halfsecond")
     Half_Second.init()
-    params:bang()
+    if engine.name ~= "None" then
+        params:bang()
+    end
     redraw()
 end
 
