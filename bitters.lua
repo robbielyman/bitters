@@ -27,7 +27,7 @@ function init()
             Needs_Restart = true
         end
     end
-    for _,file in (pulse_ptr_files) do
+    for _,file in pairs(pulse_ptr_files) do
         if not util.file_exists(extensions .. "/PulsePTR/" .. file) then
             util.os_capture("mkdir " .. extensions .. "/PulsePTR")
             util.os_capture("cp " .. norns.state.path .. "/ignore/" .. file .. " " .. extensions .. "/PulsePTR/" .. file)
