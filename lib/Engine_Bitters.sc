@@ -98,7 +98,7 @@ Engine_Bitters : CroneEngine {
       },{
         bitVoices.keysValuesDo({ arg key, syn;
           if (syn.isRunning,{
-            syn.set(\gate,0,);
+            syn.set(\gate,0);
             if (setNote==false,{
               syn.set(\gate,1,
                 \note,note

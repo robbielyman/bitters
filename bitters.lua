@@ -306,7 +306,7 @@ function init()
             "mwidth1", "lwidth1", "mindex1", "lindex1",
             "mwidth2", "lwidth2", "mindex2", "lindex2",
             "mhipass", "lhipass", "mhires", "lhires",
-            "mlopass", "mlopass", "mlores", "llores",
+            "mlopass", "llopass", "mlores", "llores",
         },
         {
             UI.ScrollingList.new(4, 34, 1,
