@@ -114,6 +114,14 @@ Engine_Bitters : CroneEngine {
     fnNoteOnPoly = {
       arg note, amp, duration;
 
+      if (bitVoices.at(note) != nil, {
+          if(bitVoices.at(note).isRunning, {
+              bitVoices.at(note).set(\gate,0);
+            }, {
+              bitVoices.at(note).free;
+          });
+      });
+
       bitVoices.put(note,
         Synth.new("BittersSynth",[
           \out, context.out_b,
