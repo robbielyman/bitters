@@ -56,7 +56,7 @@ function init()
             self.lists[2].index = util.clamp(self.index, 1, 4)
             self.lists[2].entries[1] = params:get(self.params[1]) == 1 and "pls" or "tri"
             for i = 2, 4 do
-                self.lists[2].entries[i] = params:get(self.params[i])
+                self.lists[2].entries[i] = params:string(self.params[i])
             end
             self.lists[2].text_align = "right"
             self.lists[3].active = self.index > 4
@@ -64,7 +64,7 @@ function init()
             self.lists[4].active = self.index > 4
             self.lists[4].index = util.clamp(self.index, 5, 8) - 4
             for i = 5, 8 do
-                self.lists[4].entries[i - 4] = params:get(self.params[i])
+                self.lists[4].entries[i - 4] = params:string(self.params[i])
             end
             self.lists[4].text_align = "right"
         end,
@@ -92,7 +92,7 @@ function init()
             self.lists[2].index = util.clamp(self.index, 1, 4)
             self.lists[2].entries[1] = params:get(self.params[1]) == 1 and "pls" or "tri"
             for i = 2, 4 do
-                self.lists[2].entries[i] = params:get(self.params[i])
+                self.lists[2].entries[i] = params:string(self.params[i])
             end
             self.lists[2].text_align = "right"
             self.lists[3].active = self.index > 4
@@ -100,7 +100,7 @@ function init()
             self.lists[4].active = self.index > 4
             self.lists[4].index = util.clamp(self.index, 5, 8) - 4
             for i = 5, 8 do
-                self.lists[4].entries[i - 4] = params:get(self.params[i])
+                self.lists[4].entries[i - 4] = params:string(self.params[i])
             end
             self.lists[4].text_align = "right"
         end,
@@ -126,7 +126,7 @@ function init()
             self.lists[1].index = self.index
             self.lists[2].index = self.index
             for i = 1,2 do
-                self.lists[2].entries[i] = params:get(self.params[i])
+                self.lists[2].entries[i] = params:string(self.params[i])
             end
             self.lists[2].text_align = "right"
             self.filter_graph:edit("highpass", nil, params:get(self.params[1]), params:get(self.params[2]))
@@ -150,7 +150,7 @@ function init()
             self.lists[1].index = self.index
             self.lists[2].index = self.index
             for i = 1,2 do
-                self.lists[2].entries[i] = params:get(self.params[i])
+                self.lists[2].entries[i] = params:string(self.params[i])
             end
             self.lists[2].text_align = "right"
             self.filter_graph:edit("lowpass", nil, params:get(self.params[1]), params:get(self.params[2]))
@@ -186,7 +186,7 @@ function init()
             self.lists[1].index = self.index
             self.lists[2].index = self.index
             for i = 1,4 do
-                self.lists[2].entries[i] = params:get(self.params[i])
+                self.lists[2].entries[i] = params:string(self.params[i])
             end
             self.lists[2].text_align = "right"
             self.env_graph:edit_adsr(params:get(self.params[1]), params:get(self.params[2]),
@@ -211,7 +211,7 @@ function init()
             self.lists[1].index = self.index
             self.lists[2].index = self.index
             for i = 1,4 do
-                self.lists[2].entries[i] = params:get(self.params[i])
+                self.lists[2].entries[i] = params:string(self.params[i])
             end
             self.lists[2].text_align = "right"
             self.env_graph:edit_adsr(params:get(self.params[1]), params:get(self.params[2]),
@@ -236,7 +236,7 @@ function init()
             self.lists[1].index = self.index
             self.lists[2].index = self.index
             for i = 1,2 do
-                self.lists[2].entries[i] = params:get(self.params[i])
+                self.lists[2].entries[i] = params:string(self.params[i])
             end
             self.lists[2].text_align = "right"
             self.lfo_graph:update_functions()
@@ -287,7 +287,7 @@ function init()
             self.lists[1].index = self.index
             self.lists[2].index = self.index
             for i = 1, 3 do
-                self.lists[2].entries[i] = params:get(self.params[i])
+                self.lists[2].entries[i] = params:string(self.params[i])
             end
             self.lists[2].entries[4] = params:get(self.params[4]) == 1 and "off" or "on"
             self.lists[2].text_align = "right"
@@ -327,14 +327,14 @@ function init()
             self.lists[1].num_above_selected = 0
             self.lists[2].index = row
             for i = 1, 9 do
-                self.lists[2].entries[i] = params:get(self.params[2 * (i - 1) + 1])
+                self.lists[2].entries[i] = params:string(self.params[2 * (i - 1) + 1])
             end
             self.lists[2].active = self.index % 2 == 1
             self.lists[2].text_align = "center"
             self.lists[2].num_above_selected = 0
             self.lists[3].index = row
             for i = 1, 9 do
-                self.lists[3].entries[i] = params:get(self.params[2 * i])
+                self.lists[3].entries[i] = params:string(self.params[2 * i])
             end
             self.lists[3].active = self.index % 2 == 0
             self.lists[3].text_align = "center"
@@ -381,7 +381,7 @@ function Bitters.param_changed_callback(id)
     end
     if not found then
         Popup = {
-            text = params:lookup_param(id).name .. ": " .. params:get(id),
+            text = params:lookup_param(id).name .. ": " .. params:string(id),
             redraw = function(self)
                 graphics:rect(8, 0, 128 - 16, 6, 0)
                 screen.move(64, 6)

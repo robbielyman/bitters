@@ -96,12 +96,10 @@ function Bitters.init(midicontrol)
     for i = 1,2 do
         params:add_group("osc "..i, 11 + i)
         params:add{
-            type        = "number",
+            type        = "control",
             id          = "octave"..i,
             name        = "octave",
-            min         = -2,
-            max         = 1,
-            default     = 0,
+            controlspec = controlspec.new(-2, 1, 'lin', 1, 0),
             action      = function(x)
                 local val = 12*x + params:get("coarse"..i) + 0.01*params:get("fine"..i)
                 engine.bit_set("pitch"..i, val)
@@ -109,12 +107,10 @@ function Bitters.init(midicontrol)
             end
         }
         params:add{
-            type        = "number",
+            type        = "control",
             id          = "coarse"..i,
             name        = "coarse",
-            min         = -12,
-            max         = 12,
-            default     = 0,
+            controlspec = controlspec.new(-12, 12, 'lin', 1, 0),
             action      = function(x)
                 local val = 12*params:get("octave"..i) + x + 0.01*params:get("fine"..i)
                 engine.bit_set("pitch"..i, val)
@@ -125,7 +121,7 @@ function Bitters.init(midicontrol)
             type        = "control",
             id          = "fine"..i,
             name        = "fine",
-            controlspec = controlspec.new(-100, 100, 'lin', 1, 0, "cents"),
+            controlspec = controlspec.new(-100, 100, 'lin', 1, 0),
             action      = function(x)
                 local val = 12*params:get("octave"..i) + params:get("coarse"..i) + 0.01*x
                 engine.bit_set("pitch"..i, val)
@@ -175,12 +171,10 @@ function Bitters.init(midicontrol)
             end
         }
         params:add{
-            type        = "number",
+            type        = "control",
             id          = "numerator"..i,
             name        = "fm numerator",
-            min         = 1,
-            max         = 30,
-            default     = 1,
+            controlspec = controlspec.new(1, 30, 'lin', 1, 1),
             action      = function(x)
                 local val = x / params:get("denominator"..i)
                 engine.bit_set("ratio"..i, val)
@@ -188,12 +182,10 @@ function Bitters.init(midicontrol)
             end
         }
         params:add{
-            type        = "number",
+            type        = "control",
             id          = "denominator"..i,
             name        = "fm denominator",
-            min         = 1,
-            max         = 30,
-            default     = 1,
+            controlspec = controlspec.new(1, 30, 'lin', 1, 1),
             action      = function(x)
                 local val = params:get("numerator"..i) / x
                 engine.bit_set("ratio"..i, val)
@@ -473,7 +465,7 @@ function Bitters.init(midicontrol)
         type        = "control",
         id          = "max_polyphony",
         name        = "max polyphony",
-        controlspec = controlspec.new(0, 100, 'lin', 1, 10, 'notes', 1/100),
+        controlspec = controlspec.new(0, 100, 'lin', 1, 10),
         action      = function(x)
             engine.bit_set_polyphony(math.floor(x))
             Bitters.param_changed_callback("max_polyphony")
